@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>IceWatch - WebRTC Connection Checker</title>
+    <!-- Styles Partially Generated with ChatGPT -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        body {
+            background-color: #1b1b1b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        h1 {
+            color: #fff;
+            font-family: "Arial", sans-serif;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .loader {
+            border: 12px solid #333;
+            border-top: 12px solid #ff0000;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        h2 {
+            font-size: 1.5em;
+            color: #fff;
+            font-family: "Arial", sans-serif;
+        }
+        
+        p {
+            font-size: 1.2em;
+            color: #fff;
+            font-family: "Arial", sans-serif;
+            padding: 0 3em 0 3em;
+            text-align: center;
+        }
+        
+        a {
+            font-size: 1.2em;
+            color: #fff;
+            font-family: "Arial", sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>IceWatch - WebRTC Connection Checker</h2>
+    <p>
+        IceWatch is a tool that checks the security of WebRTC connections. It helps you determine if a credential can establish a real-time communication.<br><br>Created by <strong><a href="https://navidnaf.com" target="_blank">Navid Fazle Rabbi Naf</a></strong>
+    </p>
+    <p>
+        Open the Console on your browser. If you don't see anything, try invoking <i>connections</i>
+    </p>
+    <h1>Checking WebRTC</h1>
+    <div class="loader"></div>
+
+    <script type="text/javascript">
+        // Initiate Connection Setup with the credentials
+        let connections = [];
+
+        function createConnection() {
+            const pc = new RTCPeerConnection({
+                iceServers: [{
+                    // Change These
+                    urls: 'stun:#stun-url',
+                    username: "#username",
+                    credential: "#password"
+                }]
+            });
+
+            connections.push(pc);
+            return pc;
+        }
+
+        // Create the Connections
+        let pc1 = createConnection();
+        let pc2 = createConnection();
+        let pc3 = createConnection();
+
+        // Log the status of each Connections
+        connections.forEach(pc => {
+            pc.getStats().then(stats => {
+                console.log(stats);
+            });
+        });
+
+        // Log all connected peers
+        console.log("All peers: ", connections);
+    </script>
+</body>
+
+</html>
